@@ -1,0 +1,344 @@
+:root {
+    color-scheme: dark;
+    --bg: #07111f;
+    --card: rgba(10, 21, 37, 0.95);
+    --accent: #f59e0b;
+    --accent-2: #38bdf8;
+    --text: #edf2ff;
+    --muted: #9fb4d3;
+    --border: rgba(255, 255, 255, 0.14);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #07111f 0%, #0f172a 100%);
+    color: var(--text);
+}
+
+button, input, textarea, select {
+    font: inherit;
+}
+
+.app-shell {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background: rgba(7, 17, 31, 0.75);
+    backdrop-filter: blur(14px);
+}
+
+.hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    font-size: 0.8rem;
+}
+
+.hero h1 {
+    margin: 0 0 10px;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+}
+
+.hero p {
+    margin: 0;
+    color: var(--muted);
+    max-width: 660px;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+.map-card, .detail-card, .form-card {
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background: var(--card);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
+.map-card {
+    padding: 20px;
+}
+
+/* map removed: no styles needed */
+
+/* City list cards */
+.city-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    padding: 12px;
+}
+
+.city-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+}
+
+.city-cover {
+    width: 100%;
+    height: 120px;
+    background: #0b1722;
+    border-radius: 8px;
+    object-fit: cover;
+    display: block;
+}
+
+.city-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.city-name {
+    font-weight: 700;
+}
+
+.city-date {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+/* Carousel modal */
+.carousel-modal .carousel-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.carousel-image {
+    max-width: 520px;
+    max-height: 420px;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.carousel-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.marker { display: none; }
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.detail-card, .form-card {
+    padding: 20px;
+}
+
+.photos-grid {
+    display: grid;
+    gap: 14px;
+    margin-top: 16px;
+}
+
+.photo-card {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.photo-card img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    display: block;
+}
+
+.photo-card h4 {
+    margin: 10px 10px 6px;
+}
+
+.photo-card p {
+    margin: 0 10px 12px;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.stacked-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+/* New layout tweaks for city list */
+.empty-state {
+    text-align: center;
+    padding: 40px 12px;
+    color: var(--muted);
+}
+
+.city-card {
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.city-card:focus,
+.city-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+input, textarea, select {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+}
+
+button {
+    border: none;
+    border-radius: 999px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #04101d;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.secondary-button {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+.icon-button {
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    border-radius: 50%;
+    padding: 0;
+}
+
+.two-columns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 11px;
+}
+
+/* picker removed */
+
+.helper-text {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.status-message {
+    margin-top: 12px;
+    color: var(--accent-2);
+    font-size: 0.95rem;
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.78);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 50;
+}
+
+.modal-card {
+    width: min(620px, 100%);
+    max-height: 90vh;
+    overflow: auto;
+    border-radius: 24px;
+    padding: 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 980px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .app-shell {
+        padding: 14px;
+    }
+
+    .hero {
+        padding: 18px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .two-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .map-wrapper {
+        height: 60vh;
+    }
+}

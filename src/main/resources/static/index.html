@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlacesTogether</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-shell">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">PlacesTogether</p>
+                <h1>Tu mapa de viajes en pareja</h1>
+                <p>Guarda los sitios que habéis compartido y revive cada recuerdo con fotos.</p>
+            </div>
+            <div class="hero-actions">
+                <button type="button" class="secondary-button" data-open-modal="place">Añadir lugar</button>
+                <button type="button" class="secondary-button" data-open-modal="photo">Añadir foto</button>
+            </div>
+        </header>
+
+        <main class="content-grid">
+            <section class="map-card">
+                <div class="section-heading">
+                    <div>
+                        <h2>Ciudades visitadas</h2>
+                        <p>Explora las ciudades y abre la galería de fotos con un clic.</p>
+                    </div>
+                </div>
+                <div class="city-list" id="cityList" aria-live="polite"></div>
+            </section>
+        </main>
+    </div>
+
+    <div id="photoCarouselModal" class="modal-backdrop hidden" aria-hidden="true">
+        <div class="modal-card carousel-modal" role="dialog" aria-modal="true" aria-labelledby="carouselTitle">
+            <div class="modal-header">
+                <h3 id="carouselTitle">Fotos</h3>
+                <button type="button" class="icon-button" id="closeCarousel">×</button>
+            </div>
+            <div class="carousel-content" id="carouselContent">
+                <button id="prevPhoto" class="secondary-button">◀</button>
+                <img id="carouselImage" class="carousel-image" src="" alt="">
+                <button id="nextPhoto" class="secondary-button">▶</button>
+            </div>
+            <p id="carouselCaption" class="helper-text" style="margin-top:12px"></p>
+        </div>
+    </div>
+
+    <div id="modalBackdrop" class="modal-backdrop hidden" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <div class="modal-header">
+                <h3 id="modalTitle">Añadir</h3>
+                <button type="button" class="icon-button" id="closeModal">×</button>
+            </div>
+
+            <div id="modalContent">
+                <form id="placeForm" class="stacked-form hidden">
+                    <label>
+                        Nombre
+                        <input name="name" required>
+                    </label>
+                    <label>
+                        País
+                        <input name="country" required>
+                    </label>
+                    <label>
+                        Descripción
+                        <textarea name="description" rows="3"></textarea>
+                    </label>
+                    <label>
+                        Fecha de visita
+                        <input name="visitDate" type="month">
+                    </label>
+                    <button type="submit">Guardar lugar</button>
+                </form>
+
+                <form id="photoForm" class="stacked-form hidden">
+                    <label>
+                        Lugar
+                        <select name="placeId" id="placeSelect" required></select>
+                    </label>
+                    <label>
+                        Título
+                        <input name="title" required>
+                    </label>
+                    <label>
+                        Foto
+                        <input name="file" type="file" accept="image/*" required>
+                    </label>
+                    <label>
+                        Descripción
+                        <textarea name="description" rows="3"></textarea>
+                    </label>
+                    <button type="submit">Guardar foto</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
