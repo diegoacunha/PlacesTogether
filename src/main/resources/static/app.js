@@ -63,11 +63,19 @@ function renderCityList() {
         card.className = 'city-card';
         card.type = 'button';
 
-        const cover = document.createElement('img');
-        cover.className = 'city-cover';
         const coverUrl = place.coverImageUrl || (place.photos && place.photos[0] && place.photos[0].imageUrl) || '';
-        cover.src = coverUrl;
-        cover.alt = place.name;
+        const cover = coverUrl
+            ? document.createElement('img')
+            : document.createElement('div');
+
+        if (coverUrl) {
+            cover.className = 'city-cover';
+            cover.src = coverUrl;
+            cover.alt = place.name;
+        } else {
+            cover.className = 'city-cover city-cover-placeholder';
+            cover.textContent = place.name;
+        }
 
         const name = document.createElement('div');
         name.className = 'city-name';
@@ -210,7 +218,7 @@ async function handlePlaceSubmit(event) {
     event.preventDefault();
     const formData = new FormData(placeForm);
     const rawVisit = formData.get('visitDate') || '';
-    // month input provides YYYY-MM; convert to first day of month YYYY-MM-01
+    const coverFile = formData.get('coverFile');
     const visitDate = rawVisit ? `${rawVisit}-01` : null;
 
     const payload = {
@@ -230,6 +238,24 @@ async function handlePlaceSubmit(event) {
 
         if (!response.ok) {
             throw new Error('No se pudo guardar el lugar');
+        }
+
+        const createdPlace = await response.json();
+
+        if (coverFile && coverFile.size > 0) {
+            const uploadFormData = new FormData();
+            uploadFormData.append('title', 'Portada');
+            uploadFormData.append('description', 'Imagen de portada');
+            uploadFormData.append('file', coverFile);
+
+            const coverResponse = await fetch(`/api/places/${createdPlace.id}/cover-image`, {
+                method: 'POST',
+                body: uploadFormData
+            });
+
+            if (!coverResponse.ok) {
+                throw new Error('No se pudo guardar la imagen de portada');
+            }
         }
 
         closeModal();

@@ -94,6 +94,40 @@ public class PlacesService {
         }
     }
 
+    @Transactional
+    public PlaceResponse uploadCoverImage(Long placeId, String title, String description, MultipartFile file) {
+        Place place = getPlaceOrThrow(placeId);
+
+        if (file == null || file.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Debes adjuntar una imagen de portada");
+        }
+
+        try {
+            Photo photo = new Photo();
+            photo.setTitle(title != null && !title.isBlank() ? title : "Portada");
+            photo.setDescription(description);
+            photo.setContent(file.getBytes());
+            photo.setContentType(file.getContentType() != null ? file.getContentType() : "application/octet-stream");
+            photo.setFileName(file.getOriginalFilename() != null ? file.getOriginalFilename() : "cover");
+            photo.setSize(file.getSize());
+
+            place.addPhoto(photo);
+            Photo savedPhoto = photoRepository.saveAndFlush(photo);
+
+            if (savedPhoto.getId() == null) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                        "No se pudo asignar la imagen de portada");
+            }
+
+            place.setCoverImageUrl("/api/photos/" + savedPhoto.getId() + "/content");
+            Place savedPlace = placeRepository.save(place);
+            return toPlaceResponse(savedPlace);
+        } catch (IOException exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudo guardar la imagen de portada",
+                    exception);
+        }
+    }
+
     private Place getPlaceOrThrow(Long id) {
         return placeRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Lugar no encontrado"));
@@ -101,13 +135,13 @@ public class PlacesService {
 
     private PlaceResponse toPlaceResponse(Place place) {
         return new PlaceResponse(
-            place.getId(),
-            place.getName(),
-            place.getCountry(),
-            place.getDescription(),
-            place.getVisitDate(),
-            place.getCoverImageUrl(),
-            place.getPhotos().stream().map(this::toPhotoResponse).toList());
+                place.getId(),
+                place.getName(),
+                place.getCountry(),
+                place.getDescription(),
+                place.getVisitDate(),
+                place.getCoverImageUrl(),
+                place.getPhotos().stream().map(this::toPhotoResponse).toList());
     }
 
     private PhotoResponse toPhotoResponse(Photo photo) {

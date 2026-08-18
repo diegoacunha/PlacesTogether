@@ -115,6 +115,20 @@ button, input, textarea, select {
     display: block;
 }
 
+.city-cover-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(15, 23, 42, 0.95));
+    color: var(--text);
+    font-size: clamp(1.5rem, 2vw, 2.2rem);
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.2;
+    overflow: hidden;
+}
+
 .city-meta {
     display: flex;
     justify-content: space-between;
@@ -124,6 +138,8 @@ button, input, textarea, select {
 
 .city-name {
     font-weight: 700;
+    color: var(--accent-2);
+    letter-spacing: 0.02em;
 }
 
 .city-date {
